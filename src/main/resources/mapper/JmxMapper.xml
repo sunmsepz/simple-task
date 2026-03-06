@@ -5,15 +5,15 @@
 <mapper namespace="com.example.simple.mapper.JmxMapper">
     <insert id="insert" parameterType="JmxMetricInsertDTO">
         INSERT INTO KAFKA_METRIC (
-            METRIC_ID,
-            METRIC_NM,
-            METRIC_VAL,
-            CLCT_DT
+            METRIC_ID
+            , METRIC_NM
+            , METRIC_VAL
+            , CLCT_DT
         ) VALUES (
-            METRIC_ID_SEQ.NEXTVAL,
-            #{metricNm},
-            #{metricVal},
-            #{clctDt}
+            METRIC_ID_SEQ.NEXTVAL
+            , #{metricNm}
+            , #{metricVal}
+            , #{clctDt}
         )
     </insert>
 </mapper>
