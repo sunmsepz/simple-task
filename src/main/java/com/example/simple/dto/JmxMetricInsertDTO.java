@@ -1,17 +1,25 @@
 package com.example.simple.dto;
 
-import lombok.Data;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.sql.Timestamp;
 
 /**
  * JmxMetric 저장 DTO
  *
- * @author sunms
- * @version 1.0
- * @since 2026-03-04 오후 3:07
+ * @author sunmsepz
+ * @version 1.1
+ * @since 2026-03-04 PM 3:07
  */
-@Data
+@Getter
+@ToString
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class JmxMetricInsertDTO {
 
     /** Metric 명 */
@@ -22,4 +30,5 @@ public class JmxMetricInsertDTO {
 
     /** Metric 생성 시간 */
     private Timestamp clctDt;
+
 }
