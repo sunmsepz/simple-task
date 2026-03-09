@@ -55,11 +55,12 @@ public class JmxScheduler {
                     .clctDt(new Timestamp(collectTime))
                     .build();
 
-            // JmxDTO 저장
-            metricService.saveJmxMetric(jmxDTO);
+            // 설정한 JmxDTO 저장
+            log.info("jmxDTO : {}", jmxDTO);
+            metricService.save(jmxDTO);
 
         } catch (Exception e) {
-            log.error("Scheduler failed", e);
+            log.error("Scheduler failed : {} ", e);
         }
     }
 }
