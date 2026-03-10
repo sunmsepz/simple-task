@@ -29,7 +29,7 @@ public class EndpointService {
      * @return Kafka Metrics 문자열 정보
      * @throws
      */
-    public String collect() {
+    public String collect() throws Exception {
 
         // endpointUrl 값 있는지 확인
         if (endpointUrl == null || endpointUrl.isBlank()) {
@@ -50,10 +50,6 @@ public class EndpointService {
         } catch (RestClientResponseException e) {
             // RestClient 응답 에러
             log.error("RestClient Response Error : {}, {}", e.getStatusCode(), e.getMessage());
-            return null;
-        } catch (Exception e) {
-            // 그 외 모든 에러
-            log.error("Endpoint URL collection failed : ", e);
             return null;
         }
     }
