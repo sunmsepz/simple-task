@@ -34,26 +34,11 @@ public class JmxScheduler {
             // Endpoint에서 kafka metrics 수집
             String kafkaMetrics = endpointService.collect();
 
-            if (kafkaMetrics == null) {
-                log.warn("kafkaMetric is null");
-                return;
-            }
-
             // 수집한 metrics에서 항목 값 추출
             Double jmxVal = metricService.parseMetric(kafkaMetrics, METRIC_NM);
 
-            // jmxVal의 값이 제대로 저장되었는지 확인
-            if (jmxVal == null) {
-                log.warn("jmxVal is null");
-                return;
-            }
-
-            // 각각의 구한 값을 DTO 변환 (Builder 패턴)
-            JmxMetricInsertDTO jmxDTO = JmxMetricInsertDTO.builder()
-                    .metricNm(METRIC_NM)
-                    .metricVal(jmxVal)
-                    .clctDt(new Timestamp(collectTime))
-                    .build();
+            // 각각의 구한 값을 DTO 변환(입력값 검증)
+            JmxMetricInsertDTO jmxDTO = JmxMetricInsertDTO.of(METRIC_NM, jmxVal, new Timestamp(collectTime));
 
             // JmxDTO 저장
             metricService.saveJmxMetric(jmxDTO);

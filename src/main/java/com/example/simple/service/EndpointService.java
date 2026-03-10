@@ -27,7 +27,8 @@ public class EndpointService {
      * EndpointUrl에서 Kafka Metrics 문자열 수집
      *
      * @return Kafka Metrics 문자열 정보
-     * @throws
+     * @throws ResourceAccessException RestClient 연결 시도 에러
+     * @throws RestClientResponseException RestClient 응답 에러
      */
     public String collect() throws Exception {
 
