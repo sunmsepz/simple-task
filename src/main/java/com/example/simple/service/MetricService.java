@@ -47,7 +47,7 @@ public class MetricService {
             if (line.startsWith(metricNM)) {
                 try {
                     String jmxScrDurSec = line.substring(line.lastIndexOf(" ") + 1);
-                    jmxVal =  Double.parseDouble(jmxScrDurSec);
+                    jmxVal = Double.parseDouble(jmxScrDurSec);
                     break;
                 } catch(NumberFormatException e) {
                     log.error("jmxVal is error : {}", e);
@@ -72,7 +72,7 @@ public class MetricService {
             return;
         }
 
-//        log.info("[Debug] jmxDTO : {}", jmxDTO); // 디버깅 용 츨력
+        log.info("[Debug] jmxDTO : {}", jmxDTO); // 디버깅 용 츨력
         save(jmxDTO);
     }
 
@@ -82,8 +82,7 @@ public class MetricService {
      * @param jmxDTO JmxMetric의 추출 정보 DTO
      */
     private void save(JmxMetricInsertDTO jmxDTO) throws Exception {
-        jmxMapper.insert(jmxDTO);
-        log.info("DTO save : {}", jmxDTO);
+//        jmxMapper.insert(jmxDTO);
     }
 
 }
