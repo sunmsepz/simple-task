@@ -29,7 +29,7 @@ public class MetricService {
      * @return Double형의 metric 값
      * @throws NumberFormatException 파싱이 Double 안될 때
      */
-    public Double parseMetric(String kafkaMetricLines, String metricNM) {
+    public Double parseMetric(String kafkaMetricLines, String metricNM) throws Exception {
 
         // 추출할 Metric 명칭 확인
         if (metricNM == null || metricNM.isBlank()) {
@@ -60,13 +60,30 @@ public class MetricService {
     }
 
     /**
-     * 추출한 JmxMetric 정보 DB 저장
+     * 추출한 JmxMetric 검증 및 저장 메소드 호출
      *
      * @param jmxDTO JmxMetric의 추출 정보 DTO
      */
     @Transactional
-    public void save(JmxMetricInsertDTO jmxDTO) {
+    public void saveJmxMetric(JmxMetricInsertDTO jmxDTO) throws Exception {
+
+        if (jmxDTO == null) {
+            log.warn("jmxDTO parameter is null : {}", jmxDTO);
+            return;
+        }
+
+//        log.info("[Debug] jmxDTO : {}", jmxDTO); // 디버깅 용 츨력
+        save(jmxDTO);
+    }
+
+    /**
+     * 추출한 JmxMetric 정보 DB 저장
+     *
+     * @param jmxDTO JmxMetric의 추출 정보 DTO
+     */
+    private void save(JmxMetricInsertDTO jmxDTO) throws Exception {
         jmxMapper.insert(jmxDTO);
+        log.info("DTO save : {}", jmxDTO);
     }
 
 }

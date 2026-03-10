@@ -17,6 +17,6 @@ public interface JmxMapper {
      *
      * @param jmxDTO JmxMetric의 추출 정보 DTO
      */
-    void insert(JmxMetricInsertDTO jmxDTO);
+    void insert(JmxMetricInsertDTO jmxDTO) throws Exception;
 
 }
