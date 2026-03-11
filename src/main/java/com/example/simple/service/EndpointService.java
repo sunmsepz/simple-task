@@ -34,8 +34,7 @@ public class EndpointService {
 
         // endpointUrl 값 있는지 확인
         if (endpointUrl == null || endpointUrl.isBlank()) {
-            log.warn("Kafka Metric Endpoint URL is blank");
-            return null;
+            throw new IllegalArgumentException("Kafka Metric Endpoint URL is no value : " + endpointUrl);
         }
         
         try {
