@@ -8,11 +8,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * KafkaMetrics에서 특정 metric 추출 Service
+ * kafkaMetrics에서 특정 metric 추출 Service
  *
  * @author sunmsepz
  * @version 1.1
- * @since 2026-03-09 오후 05:25
+ * @since 2026-03-09 PM 05:25
  */
 @Slf4j
 @RequiredArgsConstructor
@@ -24,29 +24,33 @@ public class MetricService {
     /**
      * KafkaMetricLines에서 추출할 Metric의 값을 반환
      * 
-     * @param kafkaMetricLines kafka Metrics 정보가 담긴 문자열
-     * @param metricNM 추출할 Metric명
+     * @param kafkaMetrics kafka 매트릭 값들이 담긴 문자열
+     * @param metricNm 추출할 Metric명
      * @return Double형의 metric 값
      * @throws NumberFormatException 파싱이 Double 안될 때
      */
-    public Double parseMetric(String kafkaMetricLines, String metricNM) throws Exception {
+    public Double parseMetric(String kafkaMetrics, String metricNm) throws Exception {
 
         // 추출할 Metric 명칭 확인
-        if (metricNM == null || metricNM.isBlank()) {
-            log.warn("Metric Name is empty");
-            return null;
+        if (kafkaMetrics == null || kafkaMetrics.isBlank()) {
+            throw new IllegalArgumentException("Kafka Metrics is no value : " + kafkaMetrics);
+        }
+
+        // 추출할 Metric 명칭 확인
+        if (metricNm == null || metricNm.isBlank()) {
+            throw new IllegalArgumentException("Metric Name is no value : " + metricNm);
         }
 
         Double jmxVal = null;
 
-        for (String line : kafkaMetricLines.split("\n")) {
+        for (String metric : kafkaMetrics.split("\n")) {
 
             // 주석 문장 제외
-            if (line.startsWith("#")) continue;
+            if (metric.startsWith("#")) continue;
 
-            if (line.startsWith(metricNM)) {
+            if (metric.startsWith(metricNm)) {
                 try {
-                    String jmxScrDurSec = line.substring(line.lastIndexOf(" ") + 1);
+                    String jmxScrDurSec = metric.substring(metric.lastIndexOf(" ") + 1);
                     jmxVal = Double.parseDouble(jmxScrDurSec);
                     break;
                 } catch(NumberFormatException e) {
@@ -68,11 +72,10 @@ public class MetricService {
     public void saveJmxMetric(JmxMetricInsertDTO jmxDTO) throws Exception {
 
         if (jmxDTO == null) {
-            log.warn("jmxDTO parameter is null : {}", jmxDTO);
-            return;
+            throw new IllegalArgumentException("jmxDTO parameter must not be null");
         }
 
-        log.info("[Debug] jmxDTO : {}", jmxDTO); // 디버깅 용 츨력
+        log.info("jmxDTO : {}", jmxDTO); // 디버깅 용 츨력
         save(jmxDTO);
     }
 
