@@ -1,14 +1,17 @@
 package com.example.simple.service;
 
 import com.example.simple.dto.JmxMetricInsertDTO;
+import com.example.simple.dto.JmxMetricSelectDTO;
 import com.example.simple.mapper.JmxMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 /**
- * kafkaMetrics에서 특정 metric 추출 Service
+ * kafkaMetrics 관련 Service
  *
  * @author sunmsepz
  * @version 1.1
@@ -19,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class MetricService {
 
+    /** Jmx Mapper 객체 */
     private final JmxMapper jmxMapper;
 
     /**
@@ -86,6 +90,29 @@ public class MetricService {
      */
     private void save(JmxMetricInsertDTO jmxDTO) throws Exception {
 //        jmxMapper.insert(jmxDTO);
+    }
+
+    /**
+     * 저장된 JmxMetric 수집 데이터 목록 반환
+     *
+     * @return JmxMetric의 수집 데이터 목록
+     */
+    @Transactional(readOnly = true)
+    public List<JmxMetricSelectDTO> findAll() throws Exception{
+
+        try {
+            List<JmxMetricSelectDTO> jmxMetrics = jmxMapper.findAll();
+
+            if (jmxMetrics.isEmpty()) {
+                return List.of();
+            }
+
+            return jmxMetrics;
+
+        } catch (Exception e) {
+
+            throw new RuntimeException("Jmx Metrics Error : ", e);
+        }
     }
 
 }

@@ -18,6 +18,7 @@ import org.springframework.web.client.*;
 @RequiredArgsConstructor
 public class EndpointService {
 
+    /** RestClient 객체 */
     private final RestClient restClient;
 
     @Value("${kafka.metrics.endpoint}")
