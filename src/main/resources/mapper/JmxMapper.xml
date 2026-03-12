@@ -16,4 +16,14 @@
             , #{clctDt}
         )
     </insert>
+
+    <select id="findAll" resultType="JmxMetricSelectDTO">
+        SELECT
+            METRIC_ID
+            , METRIC_NM
+            , METRIC_VAL
+            , CLCT_DT
+        FROM
+            KAFKA_METRIC
+    </select>
 </mapper>
