@@ -1,11 +1,10 @@
-package com.example.simple.scheduler;
+package com.example.simple.schedule;
 
-import com.example.simple.dto.JmxMetricInsertDTO;
-import com.example.simple.service.EndpointService;
-import com.example.simple.service.MetricService;
-import lombok.Getter;
+import com.example.simple.metric.dto.JmxMetricInsertDTO;
+import com.example.simple.schedule.scheduler.EndpointService;
+import com.example.simple.metric.MetricService;
+import com.example.simple.schedule.scheduler.SchedluerService;
 import lombok.RequiredArgsConstructor;
-import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -22,7 +21,7 @@ import java.sql.Timestamp;
 @Component
 @RequiredArgsConstructor
 @Slf4j
-public class JmxScheduler {
+public class JmxSchedule {
 
     /** Endpoint 서비스 객체 */
     private final EndpointService endpointService;
@@ -30,13 +29,12 @@ public class JmxScheduler {
     /** Metric 서비스 객체 */
     private final MetricService metricService;
 
+    /** Scheduler 서비스 객체 */
+    private final SchedluerService schedulerService;
+
     // 추출할 특정 Metric 명
     private static final String METRIC_NM = "jmx_scrape_duration_seconds";
 
-    // 스케줄링 제어 flag
-    @Getter
-    @Setter
-    private volatile boolean running = false;
 
     /**
      * Kafka Metric에서 jmx_scrape_duration_seconds 파싱 <br>
@@ -48,7 +46,7 @@ public class JmxScheduler {
 
         Timestamp collectTime = new Timestamp(System.currentTimeMillis());
 
-        if (this.isRunning() == false) {
+        if (schedulerService.isRunning() == false) {
             log.info("Scheduler off - [collectTime : {}]", collectTime);
             return;
         }
@@ -64,36 +62,10 @@ public class JmxScheduler {
             JmxMetricInsertDTO jmxDTO = JmxMetricInsertDTO.of(METRIC_NM, jmxVal, collectTime);
 
             // JmxDTO 저장
-            metricService.saveJmxMetric(jmxDTO);
+            metricService.save(jmxDTO);
 
         } catch (Exception e) {
             log.error("Scheduler failed", e);
         }
-    }
-
-    /**
-     * Scheduler 로직 실행
-     */
-    public void start() {
-        if (this.isRunning()) {
-            log.info("Scheduler has already started");
-            return;
-        }
-
-        this.setRunning(true);
-        log.info("start Scheduler");
-    }
-
-    /**
-     * Scheduler 로직 중단
-     */
-    public void stop() {
-        if (!this.isRunning()) {
-            log.info("Scheduler has already stopped");
-            return;
-        }
-
-        this.setRunning(false);
-        log.info("stop Scheduler");
     }
 }

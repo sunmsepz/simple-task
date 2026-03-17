@@ -1,4 +1,4 @@
-package com.example.simple.service;
+package com.example.simple.schedule.scheduler;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

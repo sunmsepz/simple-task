@@ -1,8 +1,7 @@
-package com.example.simple.controller;
+package com.example.simple.metric;
 
 
-import com.example.simple.dto.JmxMetricSelectDTO;
-import com.example.simple.service.MetricService;
+import com.example.simple.metric.dto.JmxMetricSelectDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

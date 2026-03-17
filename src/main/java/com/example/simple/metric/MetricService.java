@@ -1,8 +1,7 @@
-package com.example.simple.service;
+package com.example.simple.metric;
 
-import com.example.simple.dto.JmxMetricInsertDTO;
-import com.example.simple.dto.JmxMetricSelectDTO;
-import com.example.simple.mapper.JmxMapper;
+import com.example.simple.metric.dto.JmxMetricInsertDTO;
+import com.example.simple.metric.dto.JmxMetricSelectDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -68,27 +67,18 @@ public class MetricService {
     }
 
     /**
-     * 추출한 JmxMetric 검증 및 저장 메소드 호출
+     * 추출한 JmxMetric 검증 및 저장
      *
      * @param jmxDTO JmxMetric의 추출 정보 DTO
      */
     @Transactional
-    public void saveJmxMetric(JmxMetricInsertDTO jmxDTO) throws Exception {
+    public void save(JmxMetricInsertDTO jmxDTO) throws Exception {
 
         if (jmxDTO == null) {
             throw new IllegalArgumentException("jmxDTO parameter must not be null");
         }
 
         log.info("jmxDTO : {}", jmxDTO); // 디버깅 용 츨력
-        save(jmxDTO);
-    }
-
-    /**
-     * 추출한 JmxMetric 정보 DB 저장
-     *
-     * @param jmxDTO JmxMetric의 추출 정보 DTO
-     */
-    private void save(JmxMetricInsertDTO jmxDTO) throws Exception {
 //        jmxMapper.insert(jmxDTO);
     }
 
@@ -98,7 +88,7 @@ public class MetricService {
      * @return JmxMetric의 수집 데이터 목록
      */
     @Transactional(readOnly = true)
-    public List<JmxMetricSelectDTO> findAll() throws Exception{
+    public List<JmxMetricSelectDTO> findAll() throws Exception {
 
         try {
             List<JmxMetricSelectDTO> jmxMetrics = jmxMapper.findAll();
@@ -108,9 +98,7 @@ public class MetricService {
             }
 
             return jmxMetrics;
-
         } catch (Exception e) {
-
             throw new RuntimeException("Jmx Metrics Error : ", e);
         }
     }

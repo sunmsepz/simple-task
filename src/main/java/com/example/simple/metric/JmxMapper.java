@@ -1,7 +1,7 @@
-package com.example.simple.mapper;
+package com.example.simple.metric;
 
-import com.example.simple.dto.JmxMetricInsertDTO;
-import com.example.simple.dto.JmxMetricSelectDTO;
+import com.example.simple.metric.dto.JmxMetricInsertDTO;
+import com.example.simple.metric.dto.JmxMetricSelectDTO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
