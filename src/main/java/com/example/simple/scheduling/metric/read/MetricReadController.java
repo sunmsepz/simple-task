@@ -24,13 +24,12 @@ public class MetricReadController {
     /**
      * Metric 전체 조회
      *
-     * @return Metric의 전체 목록 반환
+     * @return Metric의 전체 목록
      */
     @GetMapping("/metrics")
-    public ApiResponse<List<MetricReadDTO>> metrics() throws Exception {
+    public ApiResponse<List<MetricReadDTO>> metrics() {
 
         List<MetricReadDTO> metrics = metricReadService.findAll();
-
-        return ApiResponse.success(200, "Scheduler Start", metrics);
+        return ApiResponse.success(200, "Metric 목록 조회 성공", metrics);
     }
 }

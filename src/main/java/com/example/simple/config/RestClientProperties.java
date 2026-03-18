@@ -5,9 +5,12 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
-
 /**
- * RestClient 설정 클래스
+ * RestClient 설정 파라미터 값
+ *
+ * @author sunmsepz
+ * @version 1.0
+ * @since 2026-03-18 AM 10:42
  */
 @ConfigurationProperties(prefix = "restclient.properties")
 @Getter

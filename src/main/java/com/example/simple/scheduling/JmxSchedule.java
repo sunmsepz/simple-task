@@ -60,13 +60,6 @@ public class JmxSchedule {
             // 각각의 구한 값을 DTO 변환(입력값 검증)
             MetricCollectDTO jmxDTO = MetricCollectDTO.of(METRIC_NM, jmxVal, collectTime);
 
-            // ToDO: collect 하고 바로 save 하는 것
-//            JmxMetricInsertDTO jmxDTO = metricService.collect(~~~~);
-//            if (jmxDTO == null) {
-//                log.warn (" ~~~~");
-//                return;
-//            }
-
             // JmxDTO 저장
             metricCollectService.save(jmxDTO);
 

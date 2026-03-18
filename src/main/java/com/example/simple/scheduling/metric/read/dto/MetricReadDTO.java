@@ -14,7 +14,6 @@ import java.sql.Timestamp;
  * @since 2026-03-11 PM 05:14
  */
 @Getter
-@Builder
 @ToString
 public class MetricReadDTO {
 
