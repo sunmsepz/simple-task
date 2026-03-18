@@ -1,34 +1,32 @@
-package com.example.simple.dto;
+package com.example.simple.scheduling.metric.read.dto;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import java.sql.Timestamp;
 
 /**
- * JmxMetric 저장 DTO
+ * Jmx Metric 수집 확인 DTO
  *
  * @author sunmsepz
- * @version 1.1
- * @since 2026-03-04 PM 3:07
+ * @version 1.0
+ * @since 2026-03-11 PM 05:14
  */
 @Getter
-@ToString
-@NoArgsConstructor
-@AllArgsConstructor
 @Builder
-public class JmxMetricInsertDTO {
+@ToString
+public class MetricReadDTO {
 
+    /** Metric ID */
+    private long metricId;
+    
     /** Metric 명 */
     private String metricNm;
-
+    
     /** Metric 값 */
     private Double metricVal;
-
+    
     /** Metric 생성 시간 */
     private Timestamp clctDt;
-
 }
