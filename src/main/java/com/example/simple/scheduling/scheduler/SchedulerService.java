@@ -21,30 +21,40 @@ public class SchedulerService {
     @Getter
     @Setter
     private volatile boolean running = false;
-
+    
     /**
-     * Scheduler 로직 실행
+     * Scheduler 로직 시작
+     *
+     * @return 시작 상태 메시지
      */
-    public void start() {
+    public String start() {
+        
+        // 이미 시작한 경우, 변동 없음
         if (this.isRunning()) {
             log.info("Scheduler has already started");
-            return;
+            return "Scheduler has already started";
         }
 
         this.setRunning(true);
         log.info("start Scheduler");
+        return "start Scheduler";
     }
 
     /**
-     * Scheduler 로직 중단
+     * Scheduler 로직 중지
+     * 
+     * @return 중지 상태 메시지
      */
-    public void stop() {
+    public String stop() {
+
+        // 이미 중지일 경우, 변동 없음
         if (this.isRunning() == false) {
             log.info("Scheduler has already stopped");
-            return;
+            return "Scheduler has already stopped";
         }
 
         this.setRunning(false);
         log.info("stop Scheduler");
+        return "stop Scheduler";
     }
 }

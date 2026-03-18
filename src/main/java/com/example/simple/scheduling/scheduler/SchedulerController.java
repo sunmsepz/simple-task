@@ -1,7 +1,7 @@
 package com.example.simple.scheduling.scheduler;
 
-import com.example.simple.common.ApiResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,27 +24,26 @@ public class SchedulerController {
     /**
      * 스케줄러 시작
      *
-     * @return
+     * @return 스케줄러 시작 상태 메시지
      */
     @PostMapping("/start")
-    public ApiResponse<String> startScheduler() {
+    public ResponseEntity<String> startScheduler() {
 
-        schedulerService.start();
-
-        return ApiResponse.success(200, "Scheduler Start", null);
+        String msg = schedulerService.start();
+        return ResponseEntity.ok(msg);
     }
-
 
     /**
-     * 스케줄러 종료
+     * 스케줄러 중지
      *
-     * @return
+     * @return 스케줄러 중지 상태 메시지
      */
     @PostMapping("/stop")
-    public ApiResponse<String> stopScheduler() {
+    public ResponseEntity<String> stopScheduler() {
 
-        schedulerService.stop();
-
-        return ApiResponse.success(200, "Scheduler Stop", null);
+        String msg = schedulerService.stop();
+        return ResponseEntity.ok(msg);
     }
+
+
 }
