@@ -1,4 +1,4 @@
-package com.example.simple.metric.dto;
+package com.example.simple.scheduling.metric.collect.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -20,7 +20,7 @@ import java.sql.Timestamp;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class JmxMetricInsertDTO {
+public class MetricCollectDTO {
 
     /** Metric 명 */
     private String metricNm;
@@ -31,7 +31,6 @@ public class JmxMetricInsertDTO {
     /** Metric 생성 시간 */
     private Timestamp clctDt;
 
-
     /**
      * JmxMetricInsertDTO의 입력값 검증한 DTO 반환
      *
@@ -40,7 +39,7 @@ public class JmxMetricInsertDTO {
      * @param clctDt Metric 추출 시간
      * @return JmxMetricInsertDTO
      */
-    public static JmxMetricInsertDTO of(String metricNm, Double metricVal, Timestamp clctDt) {
+    public static MetricCollectDTO of(String metricNm, Double metricVal, Timestamp clctDt) {
         /** DTO 입력값 검증 */
         if (metricNm == null || metricNm.isBlank()) {
             throw new IllegalArgumentException("metricNm is empty");
@@ -54,7 +53,7 @@ public class JmxMetricInsertDTO {
             throw new IllegalArgumentException("clctDt is null");
         }
 
-        return JmxMetricInsertDTO.builder()
+        return MetricCollectDTO.builder()
                                  .metricNm(metricNm)
                                  .metricVal(metricVal)
                                  .clctDt(clctDt)

@@ -1,4 +1,4 @@
-package com.example.simple.schedule.scheduler;
+package com.example.simple.scheduling.scheduler;
 
 
 import lombok.Getter;
@@ -7,11 +7,15 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 /**
+ * 스케줄러 제어 Service
  *
+ * @version 1.0
+ * @author sunmsepz
+ * @since 2026-03-18 PM 03:06
  */
-@Slf4j
 @Service
-public class SchedluerService {
+@Slf4j
+public class SchedulerService {
 
     /** 스케줄링 제어 flag */
     @Getter

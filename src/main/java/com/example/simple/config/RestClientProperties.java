@@ -2,10 +2,16 @@ package com.example.simple.config;
 
 
 import lombok.Getter;
+import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
-@Getter
+
+/**
+ * RestClient 설정 클래스
+ */
 @ConfigurationProperties(prefix = "restclient.properties")
+@Getter
+@Setter
 public class RestClientProperties {
 
     /** 연결 시도 최대 3초 */

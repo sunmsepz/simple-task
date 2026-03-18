@@ -1,28 +1,62 @@
-package com.example.simple.metric;
+package com.example.simple.scheduling.metric.collect;
 
-import com.example.simple.metric.dto.JmxMetricInsertDTO;
-import com.example.simple.metric.dto.JmxMetricSelectDTO;
+import com.example.simple.scheduling.metric.collect.dto.MetricCollectDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
+import org.springframework.web.client.ResourceAccessException;
+import org.springframework.web.client.RestClient;
+import org.springframework.web.client.RestClientResponseException;
 
 /**
  * kafkaMetrics 관련 Service
  *
  * @author sunmsepz
- * @version 1.1
- * @since 2026-03-09 PM 05:25
+ * @version 1.2
+ * @since 2026-03-17 PM 06:07
  */
+@Service
 @Slf4j
 @RequiredArgsConstructor
-@Service
-public class MetricService {
+public class MetricCollectService {
 
     /** Jmx Mapper 객체 */
-    private final JmxMapper jmxMapper;
+    private final MetricCollectMapper metricCollectMapper;
+
+    /** RestClient 객체 */
+    private final RestClient restClient;
+
+    /**
+     * EndpointUrl에서 Kafka Metrics 문자열 수집
+     *
+     * @return Kafka Metrics 문자열 정보
+     * @throws ResourceAccessException RestClient 연결 시도 에러
+     * @throws RestClientResponseException RestClient 응답 에러
+     */
+    public String collect(String endpointUrl) {
+
+        // endpointUrl 값 있는지 확인
+        if (endpointUrl == null || endpointUrl.isBlank()) {
+            throw new IllegalArgumentException("Kafka Metric Endpoint URL is no value : " + endpointUrl);
+        }
+
+        try {
+            return restClient
+                    .get()
+                    .uri(endpointUrl)
+                    .retrieve()
+                    .body(String.class);
+        } catch (ResourceAccessException e) {
+            // RestClient 연결 시도 에러
+            log.error("RestClient Connection Error : {}", e.getMessage());
+            return null;
+        } catch (RestClientResponseException e) {
+            // RestClient 응답 에러
+            log.error("RestClient Response Error : {}, {}", e.getStatusCode(), e.getMessage());
+            return null;
+        }
+    }
 
     /**
      * KafkaMetricLines에서 추출할 Metric의 값을 반환
@@ -32,7 +66,7 @@ public class MetricService {
      * @return Double형의 metric 값
      * @throws NumberFormatException 파싱이 Double 안될 때
      */
-    public Double parseMetric(String kafkaMetrics, String metricNm) throws Exception {
+    public Double parseMetric(String kafkaMetrics, String metricNm) {
 
         // 추출할 Metric 명칭 확인
         if (kafkaMetrics == null || kafkaMetrics.isBlank()) {
@@ -72,35 +106,13 @@ public class MetricService {
      * @param jmxDTO JmxMetric의 추출 정보 DTO
      */
     @Transactional
-    public void save(JmxMetricInsertDTO jmxDTO) throws Exception {
+    public void save(MetricCollectDTO jmxDTO) throws Exception {
 
         if (jmxDTO == null) {
             throw new IllegalArgumentException("jmxDTO parameter must not be null");
         }
 
+        metricCollectMapper.insert(jmxDTO);
         log.info("jmxDTO : {}", jmxDTO); // 디버깅 용 츨력
-//        jmxMapper.insert(jmxDTO);
     }
-
-    /**
-     * 저장된 JmxMetric 수집 데이터 목록 반환
-     *
-     * @return JmxMetric의 수집 데이터 목록
-     */
-    @Transactional(readOnly = true)
-    public List<JmxMetricSelectDTO> findAll() throws Exception {
-
-        try {
-            List<JmxMetricSelectDTO> jmxMetrics = jmxMapper.findAll();
-
-            if (jmxMetrics.isEmpty()) {
-                return List.of();
-            }
-
-            return jmxMetrics;
-        } catch (Exception e) {
-            throw new RuntimeException("Jmx Metrics Error : ", e);
-        }
-    }
-
 }

@@ -1,11 +1,10 @@
-package com.example.simple.metric.dto;
+package com.example.simple.scheduling.metric.read.dto;
 
 import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
 
 import java.sql.Timestamp;
-
 
 /**
  * Jmx Metric 수집 확인 DTO
@@ -17,7 +16,7 @@ import java.sql.Timestamp;
 @Getter
 @Builder
 @ToString
-public class JmxMetricSelectDTO {
+public class MetricReadDTO {
 
     /** Metric ID */
     private long metricId;

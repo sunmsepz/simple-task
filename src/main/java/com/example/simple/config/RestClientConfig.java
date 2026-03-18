@@ -1,6 +1,7 @@
 package com.example.simple.config;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.client.SimpleClientHttpRequestFactory;
@@ -14,11 +15,18 @@ import org.springframework.web.client.RestClient;
  * @since 2026-03-09 PM 3:12
  */
 @Configuration
+@EnableConfigurationProperties(RestClientProperties.class)
 @RequiredArgsConstructor
 public class RestClientConfig {
 
+    /** RestClient 설정 객체 */
     private final RestClientProperties restClientProp;
 
+    /**
+     * RestClient Bean 객체 생성
+     *
+     * @return RestClient Bean 객체
+     */
     @Bean
     public RestClient restClient() {
         SimpleClientHttpRequestFactory requestFactory = new SimpleClientHttpRequestFactory();
