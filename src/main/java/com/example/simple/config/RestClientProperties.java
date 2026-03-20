@@ -17,9 +17,21 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @Setter
 public class RestClientProperties {
 
-    /** 연결 시도 최대 3초 */
+    /** 연결 시도 제한 시간 */
     private int connTimeout;
 
-    /** 데이터를 받을 최대 10초 */
+    /** 응답 데이터 받는 제한 시간 */
     private int readTimeout;
+
+    /** 연결 풀 최대 연결 수 */
+    private int maxConnTotal;
+
+    /** 호스트당 풀 최대 연결 수 */
+    private int maxConnPerRoute;
+
+    /** 재시도 횟수 */
+    private int retryCount;
+
+    /** 재시도 간격 (밀리초) */
+    private long retryDelay;
 }
