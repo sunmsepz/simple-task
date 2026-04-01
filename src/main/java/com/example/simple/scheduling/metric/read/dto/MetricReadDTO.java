@@ -1,6 +1,6 @@
 package com.example.simple.scheduling.metric.read.dto;
 
-import lombok.Builder;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.ToString;
 
@@ -14,6 +14,7 @@ import java.sql.Timestamp;
  * @since 2026-03-11 PM 05:14
  */
 @Getter
+@AllArgsConstructor
 @ToString
 public class MetricReadDTO {
 

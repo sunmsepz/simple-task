@@ -1,4 +1,4 @@
-package com.example.simple.config;
+package com.example.simple.config.restclient;
 
 import lombok.RequiredArgsConstructor;
 import org.apache.hc.client5.http.config.ConnectionConfig;
@@ -32,9 +32,9 @@ public class RestClientConfig {
     private final RestClientProperties restClientProp;
 
     /**
-     * RestClient Bean 객체 생성
+     * RestClient Bean 객체
      *
-     * @return RestClient Bean 객체
+     * @return RestClient 객체
      */
     @Bean
     public RestClient restClient() {

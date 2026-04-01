@@ -1,8 +1,7 @@
 package com.example.simple.scheduling;
 
-import com.example.simple.scheduling.metric.collect.dto.MetricCollectDTO;
 import com.example.simple.scheduling.metric.collect.MetricCollectService;
-import com.example.simple.scheduling.scheduler.SchedulerService;
+import com.example.simple.scheduling.metric.collect.dto.MetricCollectDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -26,8 +25,8 @@ public class JmxSchedule {
     /** Metric 서비스 객체 */
     private final MetricCollectService metricCollectService;
 
-    /** Scheduler 서비스 객체 */
-    private final SchedulerService schedulerService;
+    /** Scheduler 제어 객체 */
+    private final ScheduleFlag scheduleFlag;
 
     /** 추출할 특정 Metric 명 */
     private static final String METRIC_NM = "jmx_scrape_duration_seconds";
@@ -45,20 +44,18 @@ public class JmxSchedule {
 
         Timestamp collectTime = new Timestamp(System.currentTimeMillis());
 
-        if (schedulerService.isRunning() == false) {
+        // Scheduler 실행 여부
+        if (scheduleFlag.isRunning() == false) {
             log.info("Scheduler off - [collectTime : {}]", collectTime);
             return;
         }
 
         try {
-            // Endpoint에서 kafka metrics 수집
-            String kafkaMetrics = metricCollectService.collect(endpointUrl);
-
-            // 수집한 metrics에서 항목 값 추출
-            Double jmxVal = metricCollectService.parseMetric(kafkaMetrics, METRIC_NM);
+            // Endpoint에서 kafka metrics 수집 값
+            Double kafkaMetricsVal = metricCollectService.collect(endpointUrl, METRIC_NM);
 
             // 각각의 구한 값을 DTO 변환(입력값 검증)
-            MetricCollectDTO jmxDTO = MetricCollectDTO.of(METRIC_NM, jmxVal, collectTime);
+            MetricCollectDTO jmxDTO = MetricCollectDTO.of(METRIC_NM, kafkaMetricsVal, collectTime);
 
             // JmxDTO 저장
             metricCollectService.save(jmxDTO);

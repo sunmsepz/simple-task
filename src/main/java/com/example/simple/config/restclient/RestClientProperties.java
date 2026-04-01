@@ -1,4 +1,4 @@
-package com.example.simple.config;
+package com.example.simple.config.restclient;
 
 
 import lombok.Getter;
@@ -13,8 +13,8 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * @since 2026-03-18 AM 10:42
  */
 @ConfigurationProperties(prefix = "restclient.properties")
-@Getter
 @Setter
+@Getter
 public class RestClientProperties {
 
     /** 연결 시도 제한 시간 */

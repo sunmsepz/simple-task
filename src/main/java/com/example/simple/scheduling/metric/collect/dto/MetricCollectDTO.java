@@ -3,7 +3,6 @@ package com.example.simple.scheduling.metric.collect.dto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import java.sql.Timestamp;
@@ -17,7 +16,6 @@ import java.sql.Timestamp;
  */
 @Getter
 @ToString
-@NoArgsConstructor
 @AllArgsConstructor
 @Builder
 public class MetricCollectDTO {

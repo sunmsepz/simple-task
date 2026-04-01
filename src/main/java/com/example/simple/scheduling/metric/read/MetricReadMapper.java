@@ -17,6 +17,8 @@ public interface MetricReadMapper {
 
     /**
      * Kafka Metric의 전체 데이터 목록 조회
+     *
+     * @return MetricReadDTO 목록
      */
     List<MetricReadDTO> findAll() throws Exception;
 }
